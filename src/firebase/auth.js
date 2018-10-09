@@ -19,3 +19,6 @@ export const doPasswordReset =
 // Password Change
 export const doPasswordUpdate =
 (password) => auth.currentUser.updatePassword(password);
+
+export const updateProfile =
+(object) => auth.currentUser.updateProfile(object);

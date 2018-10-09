@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import Post from './Post';
+import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
 class ListPosts extends Component {
   render(){
-    return(<div> mi component ListPosts</div>)
+    return(
+      <div className="container">
+        <h2>Comentarios</h2>
+        <Post/>
+      </div>
+    )
   }
 }
 

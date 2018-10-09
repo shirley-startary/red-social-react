@@ -40,6 +40,10 @@ class SignUpForm extends Component {
     const { history } = this.props
     auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.passwordOne)
       .then( authUser => {
+        auth.updateProfile({
+          displayName: `${this.state.firstName} ${this.state.lastName}`,
+          photoURL: 'https://www.weact.org/wp-content/uploads/2016/10/Blank-profile.png',
+        })
         this.setState({ ...INITIAL_STATE });
         history.push(routes.HOME);
       })
