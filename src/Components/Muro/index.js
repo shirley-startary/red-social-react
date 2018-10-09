@@ -2,31 +2,47 @@
 import React, { Component } from 'react';
 import ListPosts from '../Posts/ListPost';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import { database } from '../../firebase';
+import { database, auth } from '../../firebase';
 
 class Muro extends Component {
   constructor(props){
     super(props)
     this.state = {
       textArea:'',
+      user:null,
     }
   }
 
   onSubmit = (e) =>{
-    console.log('hola');
     e.preventDefault()
+    database.ref('Posts').push({
+      mensaje: this.state.textArea,
+      corazones: 0,
+      autor: this.state.user,
+    });
   }
 
   onChange = (texto)=>{
     this.setState({textArea: texto})
   }
 
-  conponentDidMount(){
-    database.ref('Post')
-  }
 
+  componentDidMount(){
+    auth.onAuthStateChanged((user) => {
+      this.setState({
+        user:{
+          name: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL,
+          uid: user.uid,
+        }
+      })
+    });
+
+    
+  }
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
       <div className="Muro container">
         <h1> Bienvenido a tu muro</h1>
@@ -37,6 +53,8 @@ class Muro extends Component {
   }
 };
 
+
+// Componente Formulario del post
 class FormPost extends Component {
   constructor(props) {
     super(props);

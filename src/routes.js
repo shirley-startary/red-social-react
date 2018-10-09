@@ -30,8 +30,6 @@ class AppRoutes extends Component {
     }
 
   render() {
-    console.log(this.state);
-
       return (
         <App>
           <Switch>

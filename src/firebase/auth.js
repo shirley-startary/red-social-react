@@ -22,3 +22,6 @@ export const doPasswordUpdate =
 
 export const updateProfile =
 (object) => auth.currentUser.updateProfile(object);
+
+export const onAuthStateChanged =
+(callback) => auth.onAuthStateChanged(callback)
