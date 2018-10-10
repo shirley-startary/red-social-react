@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import logo from './Global/images/logo.svg';
+// import logo from './Global/images/logo.svg';
 import './Global/css/App.css';
 import './Global/css/global.css';
 
 class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-      algo:"algo"
-    }
-  }
   render() {
     const { children } = this.props;
     return (

@@ -10,6 +10,7 @@ class Muro extends Component {
     this.state = {
       textArea:'',
       user:null,
+      comentarios:[],
     }
   }
 
@@ -39,15 +40,18 @@ class Muro extends Component {
       })
     });
 
-    
+    database.ref('Posts').on('value', (snapshot) => {
+      const newArray = Array.from(snapshot.val());
+      console.log(newArray);
+      // this.setState({comentarios: })
+    })
   }
   render() {
-    console.log(this.state);
     return (
       <div className="Muro container">
         <h1> Bienvenido a tu muro</h1>
         <FormPost onChange={this.onChange} onSubmit={this.onSubmit} textArea={this.state.textArea}/>
-        <ListPosts  />
+        <ListPosts ListaComentarios={this.state.comentarios} />
       </div>
     );
   }

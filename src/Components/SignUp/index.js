@@ -53,12 +53,12 @@ class SignUpForm extends Component {
   render() {
     const {firstName, lastName, email, passwordOne, passwordTwo} = this.state;
     const isInvalid =
-      firstName.trim() == '' ||
-      lastName.trim() == '' ||
-      passwordOne.trim() == '' ||
-      passwordTwo.trim() == '' ||
+      firstName.trim() === '' ||
+      lastName.trim() === '' ||
+      passwordOne.trim() === '' ||
+      passwordTwo.trim() === '' ||
       passwordOne !== passwordTwo ||
-      email.trim() == '';
+      email.trim() === '';
 
     return (
       <Form onSubmit={this.onSubmit}>

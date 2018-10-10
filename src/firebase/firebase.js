@@ -1,5 +1,8 @@
 // Initialize Firebase
 import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/firestore';
 
 var config = {
   apiKey: "AIzaSyBq93vStjZJ6Y1AvJeEqBffIzotzWhbVZ4",
@@ -16,6 +19,9 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const database= firebase.database();
+
+firebase.firestore().settings({ timestampsInSnapshots: true });
+
 
 export {
   auth,

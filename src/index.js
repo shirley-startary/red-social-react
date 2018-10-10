@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom'
-import firebase from 'firebase';
+// import firebase from 'firebase';
 
 // Routes
 import AppRoutes from './routes';
