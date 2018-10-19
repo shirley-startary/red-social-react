@@ -1,6 +1,7 @@
 // Dependencias
 import React, { Component } from 'react';
 import ListPosts from '../Posts/ListPost';
+import Navbar from '../Global/NavBar';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { database, auth } from '../../firebase';
 
@@ -16,8 +17,11 @@ class Muro extends Component {
 
   onSubmit = (e) =>{
     e.preventDefault()
+    const key = database.ref().child('posts').push().key;
+
     database.ref('Posts').push({
       mensaje: this.state.textArea,
+      postId: key,
       corazones: 0,
       autor: this.state.user,
     });
@@ -41,17 +45,17 @@ class Muro extends Component {
     });
 
     database.ref('Posts').on('value', (snapshot) => {
-      const newArray = Array.from(snapshot.val());
-      console.log(newArray);
-      // this.setState({comentarios: })
+      const newArray = Object.values(snapshot.val()).reverse();
+      this.setState({comentarios: newArray})
     })
   }
   render() {
     return (
       <div className="Muro container">
-        <h1> Bienvenido a tu muro</h1>
+        <Navbar history={this.props.history}/>
+        <h3> Bienvenido a tu muro</h3>
         <FormPost onChange={this.onChange} onSubmit={this.onSubmit} textArea={this.state.textArea}/>
-        <ListPosts ListaComentarios={this.state.comentarios} />
+        <ListPosts ListaComentarios={this.state.comentarios} user={this.state.user} />
       </div>
     );
   }
@@ -60,9 +64,6 @@ class Muro extends Component {
 
 // Componente Formulario del post
 class FormPost extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onChangeTextArea = (e) => {
       this.props.onChange(e.target.value)
@@ -72,7 +73,7 @@ class FormPost extends Component {
     return (
       <Form onSubmit={this.props.onSubmit}>
         <FormGroup>
-          <Label for="exampleText">Text Area</Label>
+          <Label for="exampleText">Ingresa un comentario</Label>
           <Input type="textarea" name="text" id="exampleText" value={this.props.textArea} onChange={this.onChangeTextArea} />
         </FormGroup>
         <Button>Enviar</Button>

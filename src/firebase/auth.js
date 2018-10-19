@@ -8,7 +8,11 @@ export const doCreateUserWithEmailAndPassword =
 export const doSignInWithEmailAndPassword =
 (email, password) => auth.signInWithEmailAndPassword(email, password);
 
-// Sign Up
+// Sign In Google
+
+export const signInRedes = (provider) => auth.signInWithPopup(provider);
+
+// Sign Out
 export const doSignOut =
 () => auth.signOut();
 
@@ -20,6 +24,7 @@ export const doPasswordReset =
 export const doPasswordUpdate =
 (password) => auth.currentUser.updatePassword(password);
 
+// Update perfil con el nombre y la imagen
 export const updateProfile =
 (object) => auth.currentUser.updateProfile(object);
 

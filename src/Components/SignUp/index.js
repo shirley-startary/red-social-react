@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { SignInLink } from '../Login';
 import { Link, withRouter} from 'react-router-dom';
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import * as routes from '../../constants/routesConstants';
 import { auth } from '../../firebase';
 // console.log();
@@ -37,7 +37,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    const { history } = this.props
+    const { history } = this.props;
     auth.doCreateUserWithEmailAndPassword(this.state.email, this.state.passwordOne)
       .then( authUser => {
         auth.updateProfile({
@@ -45,9 +45,11 @@ class SignUpForm extends Component {
           photoURL: 'https://www.weact.org/wp-content/uploads/2016/10/Blank-profile.png',
         })
         this.setState({ ...INITIAL_STATE });
-        history.push(routes.HOME);
       })
       .catch( error => console.log(error))
+
+console.log(history);
+    history.push(routes.HOME);
   }
 
   render() {
@@ -93,7 +95,7 @@ class SignUpForm extends Component {
         <Button type="submit" disabled={isInvalid} >Sign Up</Button>
         <p className="small text-center text-gray-soft">
           By clicking "Sign up" you agree to our
-          <a href="#">Terms of Service.</a>
+          <a>Terms of Service.</a>
         </p>
       </Form>
     );

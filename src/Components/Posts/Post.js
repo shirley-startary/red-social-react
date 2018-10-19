@@ -1,18 +1,33 @@
 import React from 'react';
-import { Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import DeleteIcon from '../Global/images/bin.png';
+import EditIcon from '../Global/images/edit.png';
+import DisLikeIcon from '../Global/images/thumbs-up.png';
+import LikeIcon from '../Global/images/thumbs-up-hand-symbol.png';
 
 const Post = (props) => {
-  return (
-    <div className="container">
+  if (props.comentario.autor.email === props.user.email) {
+    return (<div className="container mg-2">
       <Card>
         <CardBody>
-          <CardTitle>{props.texto}</CardTitle>
+          <CardTitle>{props.comentario.autor.name}</CardTitle>
           <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the cards content.</CardText>
-          <Button className="mg-2">Eliminar ❌</Button>
-          <Button className="mg-2">Editar ✏</Button>
-          <Button className="mg-2">Like 👍</Button>
+          <CardText>{props.comentario.mensaje}</CardText>
+          <Button className="mg-2"><img src={DeleteIcon} alt="eliminar"/></Button>
+          <Button className="mg-2"><img src={EditIcon} alt="edit"/></Button>
+          <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
+        </CardBody>
+      </Card>
+    </div>)
+  }
+  return (
+    <div className="container mg-2">
+      <Card>
+        <CardBody>
+          <CardTitle>{props.comentario.autor.name}</CardTitle>
+          <CardSubtitle>Card subtitle</CardSubtitle>
+          <CardText>{props.comentario.mensaje}</CardText>
+          <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
         </CardBody>
       </Card>
     </div>

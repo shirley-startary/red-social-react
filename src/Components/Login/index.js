@@ -1,15 +1,16 @@
 // Dependencias
 import React, { Component } from 'react';
 import { SignUpLink } from '../SignUp';
-import { Link , withRouter } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Link , withRouter} from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { auth } from '../../firebase';
 import * as routes from '../../constants/routesConstants';
+import { providerGoogle, providerFacebook } from '../../firebase';
 
-const SignInPage = ({history}) => {
+const SignInPage = (props) => {
   return (<div className="Login container">
             <h1>SignIn</h1>
-            <SignInForm history={ history }/>
+            <SignInForm history={ props.history }/>
             <SignUpLink />
           </div>)
 }
@@ -23,8 +24,7 @@ const INITIAL_STATE = {
 class SignInForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { ...INITIAL_STATE };
+    this.state = {...INITIAL_STATE};
   }
 
   onChange = (e) => {
@@ -41,6 +41,26 @@ class SignInForm extends Component {
      })
      .catch(error => console.log(error))
   }
+
+  SignInRedes = (e) => {
+    let provider = null;
+    switch (e.target.id) {
+        case 'google':
+          provider = providerGoogle;
+          break;
+        case 'facebook':
+          provider = providerFacebook;
+          break;
+        default:
+          console.log('no es un codigo correcto');
+    }
+
+    auth.signInRedes(provider).then((result) => {
+      console.log(result);
+    });
+  }
+
+
 
   render() {
     const {password, email} = this.state;
@@ -60,11 +80,10 @@ class SignInForm extends Component {
         </FormGroup>
         <Button type="submit" size="sm" block disabled={isInvalid}>Log In</Button>
         <div className="text-center">
-          <Button size="sm" className="mg-2" color="danger">Log In Google</Button>
-          <Button size="sm" className="mg-2" color="primary">Log In Facebook</Button>
+          <Button size="sm" className="mg-2" color="danger" type="button" id="google" onClick={this.SignInRedes} >Log In Google</Button>
+          <Button size="sm" className="mg-2" color="primary" type="button" id="facebook" onClick={this.SignInRedes}>Log In Facebook</Button>
         </div>
-      </Form>
-    )
+      </Form>)
   }
 };
 
