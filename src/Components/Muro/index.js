@@ -10,6 +10,7 @@ class Muro extends Component {
     super(props)
     this.state = {
       textArea:'',
+      inputEdit:'',
       user:null,
       comentarios:[],
     }
@@ -19,7 +20,7 @@ class Muro extends Component {
     e.preventDefault()
     const key = database.ref().child('posts').push().key;
 
-    database.ref('Posts').push({
+    database.ref(`/Posts/${key}`).set({
       mensaje: this.state.textArea,
       postId: key,
       corazones: 0,
@@ -31,6 +32,35 @@ class Muro extends Component {
     this.setState({textArea: texto})
   }
 
+
+  deleteAction = (e) => {
+    const confirm = window.confirm("¿Está seguro que quiere eliminar el mensaje?");
+    const postId = e.target.dataset.id
+    if (confirm) {
+      console.log(postId);
+        database.ref(`/Posts/${postId}`).remove();
+    }
+    this.updateStateComentarios()
+  }
+
+  editComentario = (e) => {
+    console.log(e.target.dataset.id);
+    const postId = e.target.dataset.id
+
+    database.ref(`/Posts/${postId}/mensaje`).once('value', (snapshot) => {
+      console.log(snapshot.val());
+      this.setState({inputEdit:snapshot.val()})
+      // const newArray = Object.values(snapshot.val()).reverse();
+      // this.setState({comentarios: newArray})
+    })
+  }
+
+  updateStateComentarios = () => {
+    database.ref('Posts').on('value', (snapshot) => {
+      const newArray = Object.values(snapshot.val()).reverse();
+      this.setState({comentarios: newArray})
+    })
+  }
 
   componentDidMount(){
     auth.onAuthStateChanged((user) => {
@@ -44,18 +74,22 @@ class Muro extends Component {
       })
     });
 
-    database.ref('Posts').on('value', (snapshot) => {
-      const newArray = Object.values(snapshot.val()).reverse();
-      this.setState({comentarios: newArray})
-    })
+    this.updateStateComentarios();
+
   }
+
+  shouldComponentUpdate () {
+    console.log("actualizando");
+    return true;
+  }
+
   render() {
     return (
       <div className="Muro container">
         <Navbar history={this.props.history}/>
         <h3> Bienvenido a tu muro</h3>
         <FormPost onChange={this.onChange} onSubmit={this.onSubmit} textArea={this.state.textArea}/>
-        <ListPosts ListaComentarios={this.state.comentarios} user={this.state.user} />
+        <ListPosts ListaComentarios={this.state.comentarios} inputEdit={this.state.inputEdit} user={this.state.user} deleteAction={this.deleteAction} editAction={this.editComentario} />
       </div>
     );
   }

@@ -10,7 +10,12 @@ const ListPosts = (props) => {
       <div>
         {
           props.ListaComentarios.map(comentario => {
-            return (<Post comentario={comentario} user={props.user} key={comentario.postId}/>)
+            return (<Post comentario={comentario}
+                          user={props.user}
+                          key={comentario.postId}
+                          deleteAction={props.deleteAction}
+                          editAction={props.editAction}
+                          inputEdit={props.inputEdit}/>)
           })
         }
       </div>
