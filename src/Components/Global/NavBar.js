@@ -25,7 +25,6 @@ export default class NavbarComponent extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Navbar color="faded" light>

@@ -6,48 +6,57 @@ import DisLikeIcon from '../Global/images/thumbs-up.png';
 import LikeIcon from '../Global/images/thumbs-up-hand-symbol.png';
 
 // const Post = (props) => {
-  // console.log(props);
-  class ClassName extends React.Component {
+class Post extends React.Component {
 
-  if (props.comentario.autor.email === props.user.email) {
-    return (<div className="container mg-2">
-      <Card>
-        <CardBody>
-          <CardTitle>{props.comentario.autor.name}</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>{props.comentario.mensaje}</CardText>
-          <Form>
-            <input placeholder={'Modifica tu mensaje'} value={if()props.inputEdit}/>
-            <Button>Guardar</Button>
-            <Button>Cancelar</Button>
-          </Form>
-          <Button className="mg-2"
-              onClick={props.deleteAction}
-              data-id={props.comentario.postId}>
-              <img src={DeleteIcon} data-id={props.comentario.postId} alt="eliminar"/>
-          </Button>
-          <Button className="mg-2"
-              onClick={props.editAction}
-              data-id={props.comentario.postId}>
-              <img src={EditIcon} alt="edit" data-id={props.comentario.postId}/>
-          </Button>
-          <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
-        </CardBody>
-      </Card>
-    </div>)
+  handleClickEdit = (e) => {
+    this.props.editAction(e)
   }
-  return (
-    <div className="container mg-2">
-      <Card>
-        <CardBody>
-          <CardTitle>{props.comentario.autor.name}</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>{props.comentario.mensaje}</CardText>
-          <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
-        </CardBody>
-      </Card>
-    </div>
-  );
+  
+  handleOnChangeInputEdit = (e) => {
+    this.props.onChangeInputEdit(e)
+  }
+
+  render() {
+    if (this.props.comentario.autor.email === this.props.user.email) {
+      return (<div className="container mg-2">
+        <Card>
+          <CardBody>
+            <CardTitle>{this.props.comentario.autor.name}</CardTitle>
+            <CardSubtitle>Card subtitle</CardSubtitle>
+            <CardText>{this.props.comentario.mensaje}</CardText>
+            <Form>
+              <input onChange={this.handleOnChangeInputEdit} value={this.props.inputEdit}/>
+              <Button>Guardar</Button>
+              <Button>Cancelar</Button>
+            </Form>
+            <Button className="mg-2"
+                onClick={this.props.deleteAction}
+                data-id={this.props.comentario.postId}>
+                <img src={DeleteIcon} data-id={this.props.comentario.postId} alt="eliminar"/>
+            </Button>
+            <Button className="mg-2"
+                onClick={this.handleClickEdit}
+                data-id={this.props.comentario.postId}>
+                <img src={EditIcon} alt="edit" data-id={this.props.comentario.postId}/>
+            </Button>
+            <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
+          </CardBody>
+        </Card>
+      </div>)
+    }
+    return (
+      <div className="container mg-2">
+        <Card>
+          <CardBody>
+            <CardTitle>{this.props.comentario.autor.name}</CardTitle>
+            <CardSubtitle>Card subtitle</CardSubtitle>
+            <CardText>{this.props.comentario.mensaje}</CardText>
+            <Button className="mg-2"><img src={DisLikeIcon} alt="like" /></Button>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
 };
 
 export default Post;
