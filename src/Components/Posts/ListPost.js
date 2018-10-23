@@ -15,7 +15,8 @@ const ListPosts = (props) => {
                           key={comentario.postId}
                           deleteAction={props.deleteAction}
                           editAction={props.editAction}
-                          inputEdit={props.inputEdit}/>)
+                          inputEdit={props.inputEdit}
+                          onChangeInputEdit={props.onChangeInputEdit}/>)
           })
         }
       </div>

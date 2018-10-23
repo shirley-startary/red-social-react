@@ -32,6 +32,12 @@ class Muro extends Component {
     this.setState({textArea: texto})
   }
 
+  onChangeInputEdit = (e) => {
+    console.log(e.target.value);
+    this.setState({inputEdit: e.target.value})
+
+  }
+
 
   deleteAction = (e) => {
     const confirm = window.confirm("¿Está seguro que quiere eliminar el mensaje?");
@@ -79,7 +85,6 @@ class Muro extends Component {
   }
 
   shouldComponentUpdate () {
-    console.log("actualizando");
     return true;
   }
 
@@ -89,7 +94,7 @@ class Muro extends Component {
         <Navbar history={this.props.history}/>
         <h3> Bienvenido a tu muro</h3>
         <FormPost onChange={this.onChange} onSubmit={this.onSubmit} textArea={this.state.textArea}/>
-        <ListPosts ListaComentarios={this.state.comentarios} inputEdit={this.state.inputEdit} user={this.state.user} deleteAction={this.deleteAction} editAction={this.editComentario} />
+        <ListPosts ListaComentarios={this.state.comentarios} inputEdit={this.state.inputEdit} user={this.state.user} deleteAction={this.deleteAction} editAction={this.editComentario} onChangeInputEdit={this.onChangeInputEdit} />
       </div>
     );
   }
